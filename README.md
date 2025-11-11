@@ -29,7 +29,7 @@ This project showcases event-driven architecture using Apache Kafka, demonstrati
 
 If you have Kafka installed locally on your machine, use the local setup for better demo performance:
 
-### Quick Local Setup
+### 🐧 Linux/Mac Quick Setup
 ```bash
 # 1. Create demo topics
 ./scripts/setup-local-topics.sh /path/to/your/kafka
@@ -43,8 +43,27 @@ mvn exec:java -Dexec.mainClass="com.middleware.demo.kafka.KafkaEventDrivenDemo"
 ./scripts/monitor-demo.sh /path/to/kafka payment-events
 ```
 
-📖 **For detailed local setup instructions, see [LOCAL_SETUP.md](LOCAL_SETUP.md)**  
-🎯 **For Eclipse demo presentation guide, see [ECLIPSE_DEMO_SCRIPT.md](ECLIPSE_DEMO_SCRIPT.md)**
+### 🪟 Windows Quick Setup
+```cmd
+REM 1. Automated setup (recommended)
+scripts\start-demo.bat C:\kafka
+
+REM 2. Manual setup
+scripts\setup-local-topics.bat C:\kafka
+mvn clean compile
+mvn exec:java -Dexec.mainClass="com.middleware.demo.kafka.KafkaEventDrivenDemo"
+
+REM 3. Monitor events in separate Command Prompts
+scripts\monitor-demo.bat C:\kafka order-events
+scripts\monitor-demo.bat C:\kafka payment-events
+```
+
+📖 **Setup Guides:**
+- 🐧 **Linux/Mac**: [LOCAL_SETUP.md](LOCAL_SETUP.md)
+- 🪟 **Windows**: [WINDOWS_SETUP.md](WINDOWS_SETUP.md)
+
+🎯 **Demo Presentation:**
+- [ECLIPSE_DEMO_SCRIPT.md](ECLIPSE_DEMO_SCRIPT.md) - Complete presentation guide
 
 ## 🏗️ Architecture Overview
 
