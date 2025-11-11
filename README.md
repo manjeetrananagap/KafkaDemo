@@ -1,8 +1,8 @@
 # Apache Kafka Event-Driven Architecture Demo
 
-🚀 **A comprehensive demonstration of Apache Kafka event streaming and pub-sub messaging patterns**
+🚀 **A comprehensive demonstration of Apache Kafka event streaming optimized for Windows development**
 
-This project showcases event-driven architecture using Apache Kafka, demonstrating high-throughput event streaming, publish-subscribe messaging, and microservices communication patterns.
+This project showcases event-driven architecture using Apache Kafka, demonstrating high-throughput event streaming, publish-subscribe messaging, and microservices communication patterns. **Specially designed for Windows laptops with Eclipse IDE integration.**
 
 ## 📋 What We'll Build
 
@@ -10,6 +10,8 @@ This project showcases event-driven architecture using Apache Kafka, demonstrati
 - **Multiple consumers** subscribing to event topics  
 - **Event partitioning** and parallel processing
 - **Event replay** and offset management
+- **Windows batch scripts** for automated setup
+- **Eclipse IDE integration** for development
 
 ## 🎯 Key Learning Points
 
@@ -17,6 +19,7 @@ This project showcases event-driven architecture using Apache Kafka, demonstrati
 - **Event sourcing and stream processing** 
 - **Horizontal scalability with partitions**
 - **Event persistence and replay capabilities**
+- **Windows development workflow** with local Kafka
 
 ## 🛠️ Technologies Used
 
@@ -29,21 +32,7 @@ This project showcases event-driven architecture using Apache Kafka, demonstrati
 
 If you have Kafka installed locally on your machine, use the local setup for better demo performance:
 
-### 🐧 Linux/Mac Quick Setup
-```bash
-# 1. Create demo topics
-./scripts/setup-local-topics.sh /path/to/your/kafka
-
-# 2. Build and run the demo
-mvn clean compile
-mvn exec:java -Dexec.mainClass="com.middleware.demo.kafka.KafkaEventDrivenDemo"
-
-# 3. Monitor events in separate terminals
-./scripts/monitor-demo.sh /path/to/kafka order-events
-./scripts/monitor-demo.sh /path/to/kafka payment-events
-```
-
-### 🪟 Windows Quick Setup
+### 🪟 Windows Quick Setup (Primary Platform)
 ```cmd
 REM 1. Automated setup (recommended)
 scripts\start-demo.bat C:\kafka
@@ -58,12 +47,27 @@ scripts\monitor-demo.bat C:\kafka order-events
 scripts\monitor-demo.bat C:\kafka payment-events
 ```
 
+### 🐧 Linux/Mac Setup (Alternative)
+```bash
+# 1. Create demo topics
+./scripts/setup-local-topics.sh /path/to/your/kafka
+
+# 2. Build and run the demo
+mvn clean compile
+mvn exec:java -Dexec.mainClass="com.middleware.demo.kafka.KafkaEventDrivenDemo"
+
+# 3. Monitor events in separate terminals
+./scripts/monitor-demo.sh /path/to/kafka order-events
+./scripts/monitor-demo.sh /path/to/kafka payment-events
+```
+
 📖 **Setup Guides:**
+- 🪟 **Windows (Primary)**: [WINDOWS_SETUP.md](WINDOWS_SETUP.md) | [WINDOWS_QUICKSTART.md](WINDOWS_QUICKSTART.md)
 - 🐧 **Linux/Mac**: [LOCAL_SETUP.md](LOCAL_SETUP.md)
-- 🪟 **Windows**: [WINDOWS_SETUP.md](WINDOWS_SETUP.md)
 
 🎯 **Demo Presentation:**
 - [ECLIPSE_DEMO_SCRIPT.md](ECLIPSE_DEMO_SCRIPT.md) - Complete presentation guide
+- [DEMO_SUMMARY.md](DEMO_SUMMARY.md) - Quick reference for presenters
 
 ## 🏗️ Architecture Overview
 
@@ -88,8 +92,8 @@ scripts\monitor-demo.bat C:\kafka payment-events
 
 - **Java 11+** installed
 - **Maven 3.6+** installed  
-- **Docker & Docker Compose** installed
-- **Eclipse IDE** (recommended)
+- **Eclipse IDE** (recommended for Windows development)
+- **Local Kafka installation** (preferred) OR **Docker & Docker Compose**
 
 ### 1. Clone and Setup
 
@@ -154,13 +158,14 @@ The interactive demo provides several scenarios:
 - Offset management
 - Recovery and debugging scenarios
 
-## 🔧 Eclipse IDE Setup
+## 🔧 Eclipse IDE Setup (Windows Optimized)
 
 ### Import Project
 
 1. **File** → **Import** → **Existing Maven Projects**
 2. Browse to the `KafkaDemo` directory
 3. Select the project and click **Finish**
+4. **Right-click project** → **Maven** → **Reload Projects** (if needed)
 
 ### Run Configuration
 
@@ -168,11 +173,22 @@ The interactive demo provides several scenarios:
 2. Select `KafkaEventDrivenDemo` as the main class
 3. Click **Run**
 
+**Pre-configured Launch Configurations:**
+- `KafkaEventDrivenDemo.launch` - Main demo application
+- `PaymentServiceConsumer.launch` - Individual consumer testing
+
 ### Debug Configuration
 
 1. **Right-click** project → **Debug As** → **Java Application**
 2. Set breakpoints in consumer classes to observe event processing
 3. Use **Variables** view to inspect event payloads
+4. **Console** view shows real-time event processing logs
+
+### Windows Development Tips
+
+- Use **Command Prompt** for Kafka monitoring alongside Eclipse
+- Keep multiple Command Prompt windows open for different monitoring tasks
+- Use `scripts\monitor-demo.bat` for real-time event viewing
 
 ## 📊 Monitoring and Management
 
@@ -182,18 +198,28 @@ The interactive demo provides several scenarios:
 
 ### Command Line Tools
 
+**Windows (Local Kafka):**
+```cmd
+REM List topics
+C:\kafka\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
+
+REM Describe topic
+C:\kafka\bin\windows\kafka-topics.bat --describe --topic order-events --bootstrap-server localhost:9092
+
+REM List consumer groups
+C:\kafka\bin\windows\kafka-consumer-groups.bat --list --bootstrap-server localhost:9092
+
+REM Check consumer group status
+C:\kafka\bin\windows\kafka-consumer-groups.bat --describe --group payment-service-group --bootstrap-server localhost:9092
+```
+
+**Docker (Alternative):**
 ```bash
 # List topics
 docker exec kafka-demo-broker-simple kafka-topics --list --bootstrap-server localhost:9092
 
 # Describe topic
 docker exec kafka-demo-broker-simple kafka-topics --describe --topic order-events --bootstrap-server localhost:9092
-
-# List consumer groups
-docker exec kafka-demo-broker-simple kafka-consumer-groups --list --bootstrap-server localhost:9092
-
-# Check consumer group status
-docker exec kafka-demo-broker-simple kafka-consumer-groups --describe --group payment-service-group --bootstrap-server localhost:9092
 ```
 
 ## 🏛️ Project Structure
@@ -206,11 +232,24 @@ KafkaDemo/
 │   ├── InventoryServiceConsumer.java     # Inventory management service  
 │   ├── NotificationServiceConsumer.java  # Notification service
 │   └── KafkaEventDrivenDemo.java        # Main demo application
-├── docker-compose.yml                    # Full Kafka stack
-├── docker-compose-simple.yml            # Simple Kafka setup
 ├── scripts/
-│   └── start-kafka.sh                   # Infrastructure startup script
+│   ├── setup-local-topics.bat           # Windows topic setup
+│   ├── monitor-demo.bat                 # Windows event monitoring
+│   ├── start-demo.bat                   # Windows automated setup
+│   ├── setup-local-topics.sh            # Linux/Mac topic setup
+│   ├── monitor-demo.sh                  # Linux/Mac event monitoring
+│   └── start-kafka.sh                   # Docker infrastructure startup
+├── .project                             # Eclipse project file
+├── .classpath                           # Eclipse classpath
+├── .settings/                           # Eclipse settings
+├── docker-compose.yml                   # Full Kafka stack
+├── docker-compose-simple.yml           # Simple Kafka setup
 ├── pom.xml                              # Maven dependencies
+├── WINDOWS_SETUP.md                     # Windows setup guide
+├── WINDOWS_QUICKSTART.md                # Windows quick start
+├── LOCAL_SETUP.md                       # Linux/Mac setup guide
+├── ECLIPSE_DEMO_SCRIPT.md               # Presentation script
+├── DEMO_SUMMARY.md                      # Demo summary
 └── README.md                            # This file
 ```
 

@@ -1,20 +1,27 @@
-# 🎯 Eclipse Demo Presentation Script
+# 🎯 Eclipse Demo Presentation Script (Windows Optimized)
 
-This script provides a step-by-step guide for presenting the Kafka demo in Eclipse IDE.
+This script provides a step-by-step guide for presenting the Kafka demo in Eclipse IDE on Windows laptops.
 
 ## 🎬 Pre-Demo Setup (5 minutes before presentation)
 
-### 1. Start Local Kafka
-```bash
-# In your Kafka installation directory
-bin/zookeeper-server-start.sh config/zookeeper.properties &
-bin/kafka-server-start.sh config/server.properties &
+### 1. Start Local Kafka (Windows)
+**Command Prompt 1 (as Administrator):**
+```cmd
+cd C:\kafka
+bin\windows\zookeeper-server-start.bat config\zookeeper.properties
 ```
 
-### 2. Setup Demo Topics
-```bash
+**Command Prompt 2 (as Administrator):**
+```cmd
+cd C:\kafka
+bin\windows\kafka-server-start.bat config\server.properties
+```
+
+### 2. Setup Demo Topics (Automated)
+**Command Prompt 3:**
+```cmd
 cd KafkaDemo
-./scripts/setup-local-topics.sh /path/to/your/kafka
+scripts\start-demo.bat C:\kafka
 ```
 
 ### 3. Open Eclipse
@@ -24,13 +31,17 @@ cd KafkaDemo
   - `PaymentServiceConsumer.java`
   - `KafkaEventDrivenDemo.java`
 
-### 4. Prepare Monitoring Terminals
-```bash
-# Terminal 1: Order events monitor
-./scripts/monitor-demo.sh /path/to/kafka order-events
+### 4. Prepare Monitoring Command Prompts
+**Command Prompt 4:**
+```cmd
+cd KafkaDemo
+scripts\monitor-demo.bat C:\kafka order-events
+```
 
-# Terminal 2: Payment events monitor  
-./scripts/monitor-demo.sh /path/to/kafka payment-events
+**Command Prompt 5:**
+```cmd
+cd KafkaDemo
+scripts\monitor-demo.bat C:\kafka payment-events
 ```
 
 ## 🎤 Demo Presentation Flow (30 minutes)
