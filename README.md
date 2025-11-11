@@ -25,6 +25,27 @@ This project showcases event-driven architecture using Apache Kafka, demonstrati
 - **Spring Kafka integration**
 - **Kafka Connect for data integration**
 
+## 🏠 Local Kafka Setup (Recommended for Demos)
+
+If you have Kafka installed locally on your machine, use the local setup for better demo performance:
+
+### Quick Local Setup
+```bash
+# 1. Create demo topics
+./scripts/setup-local-topics.sh /path/to/your/kafka
+
+# 2. Build and run the demo
+mvn clean compile
+mvn exec:java -Dexec.mainClass="com.middleware.demo.kafka.KafkaEventDrivenDemo"
+
+# 3. Monitor events in separate terminals
+./scripts/monitor-demo.sh /path/to/kafka order-events
+./scripts/monitor-demo.sh /path/to/kafka payment-events
+```
+
+📖 **For detailed local setup instructions, see [LOCAL_SETUP.md](LOCAL_SETUP.md)**  
+🎯 **For Eclipse demo presentation guide, see [ECLIPSE_DEMO_SCRIPT.md](ECLIPSE_DEMO_SCRIPT.md)**
+
 ## 🏗️ Architecture Overview
 
 ```
